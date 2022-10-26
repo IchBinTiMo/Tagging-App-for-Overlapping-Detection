@@ -2,6 +2,7 @@ import {Header} from "../header";
 import {Description} from "../description";
 import {StartButton} from "../startBtn";
 import {Images} from "../images";
+import {Tagbutton} from "../tagBtn";
 
 
 
@@ -20,43 +21,140 @@ class Mainpage extends HTMLElement{
         
     }
     
-    get page(){
-        return this.getAttribute("page");
+    get pageInfo(){
+        return this.getAttribute("pageInfo");
     }
 
-    set page(value){
-        this.setAttribute("page", value);
+    set pageInfo(value){
+        this.setAttribute("pageInfo", value);
+    }
+
+    get myProgress(){
+        return this.getAttribute("myProgress");
+    }
+
+    set myProgress(value){
+        this.setAttribute("myProgress", value);
+    }
+
+    get mySpotlight(){
+        return this.getAttribute("mySpotlight");
+    }
+
+    set mySpotlight(value){
+        this.setAttribute("mySpotlight", value);
     }
 
     static get observedAttributes(){
-        return ["colorTheme", "page"];
+        return ["colorTheme", "pageInfo", "myProgress", "mySpotlight"];
     }
 
-    connectedCallback(){
+    async connectedCallback(){
+        let dict = await this.getDict();
         this.render();
-        
-        const mutationCallback = (mutationsList) =>{
-            for (const mutation of mutationsList) {                
-                // console.log(this.getAttribute("page"));
-                // console.log(this.shadowRoot.querySelector("#myHeader").page);
-                this.setAttribute("colorTheme", mutation.target.getAttribute("colorTheme"));
-                // this.setAttribute("page", mutation.target.getAttribute("page"));
-                // console.log(mutation.target.getAttribute("page"));
-                // console.log(mutation.target.getAttribute("colorTheme"));
-                this.shadowRoot.querySelector("#myDescription").colorTheme = mutation.target.getAttribute("colorTheme");
-                const bgc = (this.colorTheme === "Light") ? "white" : "#1d3040";
-                document.body.style.background = bgc;
+
+        const answerMutation = async (mutationList) => {
+            for(const mutation of mutationList){
+                if(mutation.target.myAnswer != -1){
+                    let dict = await this.getDict();
+                    let idx = dict.cases[`${dict.current + 1}`];
+                    let ansIdx = `${idx[0]}_${idx[1]}`;
+
+                    // let data = {
+                    //     answer: mutation.target.myAnswer,
+                    //     idx: ansIdx
+                    // };
+                    // // console.log(mutation.target.myAnswer);
+                    // let option = {
+                    //     method: "POST",
+                    //     headers: {
+                    //         "Content-Type": "application/json"
+                    //     },
+                    //     body: JSON.stringify(data)
+                    // };
+
+                    // console.log(data, option);
+
+                    let ansRes = await fetch(`/answer/${ansIdx}/${mutation.target.myAnswer}`);
+                    // console.log(await ansRes.text());
+                    dict = await this.getDict();
+
+                    this.shadowRoot.querySelector("#myHeader").myProgress = this.getAttribute("myProgress");
+
+                    idx = dict.cases[`${dict.current + 1}`];
+                    console.log(dict.current+1, idx);
+                    let left = idx[0];
+                    let right = idx[1];
+
+
+                    let myImages = this.shadowRoot.querySelector("#myImages");
+                    // myImages.id = "myImages";
+                    myImages.left = `/${left}_${right}/h`;
+                    myImages.right = `/${left}_${right}`;
+
+                }
             }
         };
+        
+        const answerObserver = new MutationObserver(answerMutation);
+        const mutationCallback = async (mutationsList) =>{
+            for (const mutation of mutationsList) {                
+                this.setAttribute("colorTheme", mutation.target.getAttribute("colorTheme"));
+                this.setAttribute("pageInfo", mutation.target.pageInfo);
+                this.setAttribute("mySpotlight", mutation.target.mySpotlight);
+                // console.log(mutation.target);
+                this.shadowRoot.querySelector("#myDescription").colorTheme = mutation.target.getAttribute("colorTheme");
+            }
+            const bgc = (this.colorTheme === "Light") ? "white" : "#1d3040";
+            document.body.style.background = bgc;
+            let images = this.shadowRoot.querySelector("#myImages");
+            let tagBtn = this.shadowRoot.querySelector("#myTagBtn");
+            // console.log(images, this.mySpotlight);
+            if(this.getAttribute("pageInfo") === "Tag"){
+                answerObserver.observe(this.shadowRoot.querySelector("#myTagBtn"), {attributes: true});
+                let dict = await this.getDict();
+                // this.setAttribute("myProgress", dict.current + 1);
+                // this.shadowRoot.querySelector("#myHeader").
+            }
+            if(this.pageInfo === "Home" && this.shadowRoot.querySelector("#myStartBtn") === null){
+                answerObserver.disconnect();
+                let startBtn = document.createElement("custom-startBtn");
+                startBtn.id = "myStartBtn";
+                startBtn.addEventListener("pointerup", this.start.bind(this));
+                this.shadowRoot.appendChild(startBtn);
+                if(images){
+                    this.shadowRoot.removeChild(images);
+                }
+                if(tagBtn){
+                    this.shadowRoot.removeChild(tagBtn);
+                }
+            }
+            if(images != undefined && this.mySpotlight == 1){
+                // console.log(this.mySpotlight);
+                images.left = `/image${images.right}/h`;
+            }
+            if(images != undefined && this.mySpotlight == 0){
+                // console.log(this.mySpotlight);
+                images.left = images.right.split("/")[1];
+            }
+            // console.log(images, this.mySpotlight);
+
+        };
+
+        
+
+
 
         const observer = new MutationObserver(mutationCallback);
         observer.observe(this.shadowRoot.querySelector("#myHeader"), {attributes: true, attributeOldValue: true});
+
+        // 
+        // answerObserver.observe(this.shadowRoot.querySelector("#myTagBtn"), {attributes: true});
 
         
         let startBtn = this.shadowRoot.querySelector("custom-startbtn#myStartBtn");
         startBtn.addEventListener("pointerup", this.start.bind(this));
 
-        let myImages = this.shadowRoot.querySelector("#myImages");
     }
 
 
@@ -64,20 +162,66 @@ class Mainpage extends HTMLElement{
         this.render();        
     }
 
-    
-    start(e){
-        let myImages = document.createElement("custom-images");
-        myImages.id = "myImages";
-        this.shadowRoot.appendChild(myImages);
-        this.setAttribute("page", "tag");
-        this.shadowRoot.querySelector("#myHeader").page = "Home";
+    // answerMutation(mutationList){
+    //     for(const mutation of mutationList){
+    //         console.log(mutation.target);
+    //     }
+    // }
+
+    async getDict(){
+        let jsonFile = await fetch("dict");
+        let dict = await jsonFile.json();
+        
+        // console.log(dict);
+
+        this.setAttribute("myProgress", `${dict.current + 1}/${dict.total}`);
+
+        return dict;
     }
 
-    
+    async start(e){
+        this.shadowRoot.removeChild(this.shadowRoot.querySelector("#myStartBtn"));
+        let dict = await this.getDict();
+
+        console.log(dict);
+
+        let idx = dict.cases[`${dict.current + 1}`];
+        let left = idx[0];
+        let right = idx[1];
+        // console.log(left, right);
+        
+        let myImages = document.createElement("custom-images");
+        
+        myImages.id = "myImages";
+        myImages.left = `/${left}_${right}/h`;
+        myImages.right = `/${left}_${right}`;
+        // myImages.right = right;
+        console.log(myImages.left, myImages.right);
+
+        this.shadowRoot.appendChild(myImages);
+        this.setAttribute("pageInfo", "tag");
+        this.shadowRoot.querySelector("#myHeader").pageInfo = "Tag";
+        console.log(this.shadowRoot, e.target);
+        // this.shadowRoot.querySelector("#myStartBtn").style.visibility = "hidden";
+
+        let tagBtn = document.createElement("custom-tagbtn");
+        tagBtn.id = "myTagBtn";
+        this.shadowRoot.appendChild(tagBtn);
+
+         // const answerMutation = (mutationList) => {
+        //     for(const mutation of mutationList){
+        //         console.log(mutation.target.myAnswer);
+        //     }
+        // };
+
+
+        // const answerObserver = new MutationObserver(answerMutation);
+        // answerObserver.observe(this.shadowRoot.querySelector("#myTagBtn"), {attributes: true});
+    }
 
     render(){
         this.shadowRoot.innerHTML = `
-            <custom-header id="myHeader" colorTheme=${this.colorTheme} page="Home"></custom-header>
+            <custom-header id="myHeader" colorTheme=${this.colorTheme} pageInfo="Home" myProgress=${this.myProgress}></custom-header>
             <custom-description id="myDescription" colorTheme=${this.colorTheme}></custom-description>
             <custom-startbtn id="myStartBtn"></custom-startbtn>
         `;

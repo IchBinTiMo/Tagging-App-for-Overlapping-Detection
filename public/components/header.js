@@ -5,12 +5,27 @@ export class Header extends HTMLElement{
     }
 
     connectedCallback(){
+        console.log(this.myProgress);
         this.render();
         let toggleBtn = this.shadowRoot.querySelector("#toggleBtn");
         let homeBtn = this.shadowRoot.querySelector("#homeBtn");
+        // let highlightBtn = this.shadowRoot.querySelector("#highlightBtn");
 
-        toggleBtn.addEventListener("pointerup", this.changeColorTheme.bind(this));
         homeBtn.addEventListener("pointerup", this.goHome.bind(this));
+        toggleBtn.addEventListener("pointerup", this.changeColorTheme.bind(this));
+        // highlightBtn.addEventListener("pointerup", this.highlight.bind(this));
+
+        const mutationCallback = async (mutationsList) =>{
+            for (const mutation of mutationsList) {                
+                // console.log(mutation.target);
+                this.shadowRoot.querySelector("#progress").textContent = mutation.target.myProgress;
+                // this.shadowRoot.querySelector("#ovlp").src = mutation.target.right;
+            }
+            
+        };
+
+        const observer = new MutationObserver(mutationCallback);
+        observer.observe(this, {attributes: true, attributeOldValue: true});
     }
 
     get colorTheme(){
@@ -21,16 +36,32 @@ export class Header extends HTMLElement{
         this.setAttribute("colorTheme", value);
     }
 
-    get page(){
-        return this.getAttribute("page");
+    get pageInfo(){
+        return this.getAttribute("pageInfo");
     }
 
-    set page(value){
-        this.setAttribute("page", value);
+    set pageInfo(value){
+        this.setAttribute("pageInfo", value);
+    }
+
+    get myProgress(){
+        return this.getAttribute("myProgress");
+    }
+
+    set myProgress(value){
+        this.setAttribute("myProgress", value);
+    }
+
+    get mySpotlight(){
+        return this.getAttribute("mySpotlight");
+    }
+
+    set mySpotlight(value){
+        this.setAttribute("mySpotlight", value);
     }
 
     static get observedAttributes(){
-        return ["colorTheme", "page"];
+        return ["colorTheme", "pageInfo", "myProgress", "mySpotlight"];
     }
 
     attributeChangedCallback(name, oldValue, newValue){
@@ -40,30 +71,38 @@ export class Header extends HTMLElement{
     changeColorTheme(e){
         let oldTheme = e.target.textContent;
         let newTheme = (oldTheme === "Light") ? "Dark" : "Light";
+        // console.log(`change to ${newTheme}`);
 
         this.setAttribute("colorTheme", newTheme);
         e.target.textContent = newTheme;
     }
 
-    goHome(e){
-        // this.setAttribute("page", "Home");
-        console.log(e.target);
-        let oldTheme = e.target.textContent;
-        let newTheme = (oldTheme === "Home") ? "Other" : "Home";
-
-        console.log(newTheme);
-        console.log(this.getAttribute("page"));
-        // this.setAttribute("page", newTheme);
-        e.target.textContent = newTheme;
+    goHome(){
+        this.setAttribute("pageInfo", "Home");
     }
+
+    async highlight(){
+        this.setAttribute("mySpotlight", 1);
+        // console.log(this.getAttribute("mySpotlight"));
+        await this.sleep(500);
+        this.setAttribute("mySpotlight", 0);
+        // console.log(this.getAttribute("mySpotlight"));
+    }
+
+    sleep(ms){
+        return new Promise(resolve => setTimeout(resolve, ms)); 
+    }
+
+    // <span class="btn" id="highlightBtn">Highlight</span>
 
     render(){
         this.shadowRoot.innerHTML = `
             <div id="help">
                 <span id="btn">
                     <span class="btn" id="toggleBtn">${this.colorTheme}</span>
-                    <span class="btn" id="homeBtn">Home</span>
-                    <span class="btn" id="highlightBtn">Highlight</span>
+                    <span class="btn" id="homeBtn">${this.pageInfo}</span>
+                    
+                    <span id="progress">${this.myProgress}</span>
                 </span>
                 <style>
                     span{
