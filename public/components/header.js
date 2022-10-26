@@ -7,7 +7,10 @@ export class Header extends HTMLElement{
     connectedCallback(){
         this.render();
         let toggleBtn = this.shadowRoot.querySelector("#toggleBtn");
+        let homeBtn = this.shadowRoot.querySelector("#homeBtn");
+
         toggleBtn.addEventListener("pointerup", this.changeColorTheme.bind(this));
+        homeBtn.addEventListener("pointerup", this.goHome.bind(this));
     }
 
     get colorTheme(){
@@ -18,35 +21,40 @@ export class Header extends HTMLElement{
         this.setAttribute("colorTheme", value);
     }
 
-    // get color(){
-    //     return this.getAttribute("color");
-    // }
+    get page(){
+        return this.getAttribute("page");
+    }
 
-    // set color(value){
-    //     this.setAttribute("color", value);
-    // }
+    set page(value){
+        this.setAttribute("page", value);
+    }
 
     static get observedAttributes(){
-        return ["colorTheme"];
+        return ["colorTheme", "page"];
     }
 
     attributeChangedCallback(name, oldValue, newValue){
         this.render();
-        // console.log("changed");
-        // let toggleBtn = this.shadowRoot.querySelector("#toggleBtn");
-        // toggleBtn.addEventListener("pointerup", this.changeColorTheme.bind(this));
     }
 
     changeColorTheme(e){
-        // console.log(e.target.textContent);
         let oldTheme = e.target.textContent;
         let newTheme = (oldTheme === "Light") ? "Dark" : "Light";
 
         this.setAttribute("colorTheme", newTheme);
         e.target.textContent = newTheme;
-        
+    }
 
-        
+    goHome(e){
+        // this.setAttribute("page", "Home");
+        console.log(e.target);
+        let oldTheme = e.target.textContent;
+        let newTheme = (oldTheme === "Home") ? "Other" : "Home";
+
+        console.log(newTheme);
+        console.log(this.getAttribute("page"));
+        // this.setAttribute("page", newTheme);
+        e.target.textContent = newTheme;
     }
 
     render(){

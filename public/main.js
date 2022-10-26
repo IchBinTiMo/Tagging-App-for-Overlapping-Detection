@@ -19,13 +19,30 @@ class Mainpage extends HTMLElement{
         this.setAttribute("colorTheme", value);
         
     }
+    
+    get page(){
+        return this.getAttribute("page");
+    }
+
+    set page(value){
+        this.setAttribute("page", value);
+    }
+
+    static get observedAttributes(){
+        return ["colorTheme", "page"];
+    }
 
     connectedCallback(){
         this.render();
-
+        
         const mutationCallback = (mutationsList) =>{
             for (const mutation of mutationsList) {                
+                // console.log(this.getAttribute("page"));
+                // console.log(this.shadowRoot.querySelector("#myHeader").page);
                 this.setAttribute("colorTheme", mutation.target.getAttribute("colorTheme"));
+                // this.setAttribute("page", mutation.target.getAttribute("page"));
+                // console.log(mutation.target.getAttribute("page"));
+                // console.log(mutation.target.getAttribute("colorTheme"));
                 this.shadowRoot.querySelector("#myDescription").colorTheme = mutation.target.getAttribute("colorTheme");
                 const bgc = (this.colorTheme === "Light") ? "white" : "#1d3040";
                 document.body.style.background = bgc;
@@ -49,17 +66,18 @@ class Mainpage extends HTMLElement{
 
     
     start(e){
-        // this.shadowRoot.removeChild(e.target);
         let myImages = document.createElement("custom-images");
         myImages.id = "myImages";
         this.shadowRoot.appendChild(myImages);
+        this.setAttribute("page", "tag");
+        this.shadowRoot.querySelector("#myHeader").page = "Home";
     }
 
     
 
     render(){
         this.shadowRoot.innerHTML = `
-            <custom-header id="myHeader" colorTheme=${this.colorTheme}></custom-header>
+            <custom-header id="myHeader" colorTheme=${this.colorTheme} page="Home"></custom-header>
             <custom-description id="myDescription" colorTheme=${this.colorTheme}></custom-description>
             <custom-startbtn id="myStartBtn"></custom-startbtn>
         `;
