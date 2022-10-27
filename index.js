@@ -47,6 +47,10 @@ app.get("/tagBtn", (req, res) => {
     res.sendFile(__dirname + "/public/components/tagBtn.js");
 });
 
+app.get("/done", (req, res) => { 
+    res.sendFile(__dirname + "/public/components/done.js");
+});
+
 app.get("/dict", (req, res) => {
     res.sendFile(__dirname + "/dict.json");
 });

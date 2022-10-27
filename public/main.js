@@ -3,6 +3,7 @@ import {Description} from "../description";
 import {StartButton} from "../startBtn";
 import {Images} from "../images";
 import {Tagbutton} from "../tagBtn";
+import {Done} from "../done";
 
 
 
@@ -104,12 +105,18 @@ class Mainpage extends HTMLElement{
                 this.setAttribute("mySpotlight", mutation.target.mySpotlight);
                 // console.log(mutation.target);
                 this.shadowRoot.querySelector("#myDescription").colorTheme = mutation.target.getAttribute("colorTheme");
+                if(this.shadowRoot.querySelector("#myDone")){
+                    this.shadowRoot.querySelector("#myDone").colorTheme = mutation.target.getAttribute("colorTheme");
+                }
             }
             const bgc = (this.colorTheme === "Light") ? "white" : "#1d3040";
             document.body.style.background = bgc;
             let images = this.shadowRoot.querySelector("#myImages");
             let tagBtn = this.shadowRoot.querySelector("#myTagBtn");
             // console.log(images, this.mySpotlight);
+            if(this.getAttribute("pageInfo") === "Done"){
+
+            }
             if(this.getAttribute("pageInfo") === "Tag"){
                 answerObserver.observe(this.shadowRoot.querySelector("#myTagBtn"), {attributes: true});
                 let dict = await this.getDict();
@@ -138,6 +145,10 @@ class Mainpage extends HTMLElement{
                 images.left = images.right.split("/")[1];
             }
             // console.log(images, this.mySpotlight);
+            if(this.getAttribute("pageInfo") !== "Done"){
+                this.shadowRoot.querySelector("#myDescription").style.visibility = "visible";
+                this.shadowRoot.removeChild(this.shadowRoot.querySelector("#myDone"));
+            }
 
         };
 
@@ -176,6 +187,10 @@ class Mainpage extends HTMLElement{
 
         this.setAttribute("myProgress", `${dict.current + 1}/${dict.total}`);
 
+        if(dict.current >= dict.total){
+            this.setAttribute("myProgress", `${dict.current}/${dict.total}`);
+        }
+
         return dict;
     }
 
@@ -185,28 +200,39 @@ class Mainpage extends HTMLElement{
 
         console.log(dict);
 
-        let idx = dict.cases[`${dict.current + 1}`];
-        let left = idx[0];
-        let right = idx[1];
-        // console.log(left, right);
-        
-        let myImages = document.createElement("custom-images");
-        
-        myImages.id = "myImages";
-        myImages.left = `/${left}_${right}/h`;
-        myImages.right = `/${left}_${right}`;
-        // myImages.right = right;
-        console.log(myImages.left, myImages.right);
-
-        this.shadowRoot.appendChild(myImages);
-        this.setAttribute("pageInfo", "tag");
-        this.shadowRoot.querySelector("#myHeader").pageInfo = "Tag";
-        console.log(this.shadowRoot, e.target);
-        // this.shadowRoot.querySelector("#myStartBtn").style.visibility = "hidden";
-
-        let tagBtn = document.createElement("custom-tagbtn");
-        tagBtn.id = "myTagBtn";
-        this.shadowRoot.appendChild(tagBtn);
+        if(dict.current === dict.total){
+            this.setAttribute("pageInfo", "Done");
+            let myDone = document.createElement("custom-done");
+            myDone.id = "myDone";
+            myDone.colorTheme = this.getAttribute("colorTheme") === null ? "Light" : this.getAttribute("colorTheme");
+            this.shadowRoot.appendChild(myDone);
+            this.shadowRoot.querySelector("#myDescription").style.visibility = "hidden";
+            this.shadowRoot.querySelector("#myHeader").pageInfo = "Done";
+        }
+        else{
+            let idx = dict.cases[`${dict.current + 1}`];
+            let left = idx[0];
+            let right = idx[1];
+            // console.log(left, right);
+            
+            let myImages = document.createElement("custom-images");
+            
+            myImages.id = "myImages";
+            myImages.left = `/${left}_${right}/h`;
+            myImages.right = `/${left}_${right}`;
+            // myImages.right = right;
+            console.log(myImages.left, myImages.right);
+    
+            this.shadowRoot.appendChild(myImages);
+            this.setAttribute("pageInfo", "Tag");
+            this.shadowRoot.querySelector("#myHeader").pageInfo = "Tag";
+            console.log(this.shadowRoot, e.target);
+            // this.shadowRoot.querySelector("#myStartBtn").style.visibility = "hidden";
+    
+            let tagBtn = document.createElement("custom-tagbtn");
+            tagBtn.id = "myTagBtn";
+            this.shadowRoot.appendChild(tagBtn);
+        }
 
          // const answerMutation = (mutationList) => {
         //     for(const mutation of mutationList){
