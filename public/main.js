@@ -147,7 +147,9 @@ class Mainpage extends HTMLElement{
             // console.log(images, this.mySpotlight);
             if(this.getAttribute("pageInfo") !== "Done"){
                 this.shadowRoot.querySelector("#myDescription").style.visibility = "visible";
-                this.shadowRoot.removeChild(this.shadowRoot.querySelector("#myDone"));
+                if(this.shadowRoot.querySelector("#myDone") != null){
+                    this.shadowRoot.removeChild(this.shadowRoot.querySelector("#myDone"));
+                }
             }
 
         };
