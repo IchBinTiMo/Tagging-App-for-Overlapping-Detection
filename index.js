@@ -1,7 +1,6 @@
 const express = require('express');
 const fs = require("fs");
 const path = require("path");
-const bodyParser = require("body-parser");
 
 const app = express();
 
@@ -12,9 +11,6 @@ let current;
 let total;
 let resDict;
 
-let jsonParser = bodyParser.json();
-
-let urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 app.use(express.static("public"));
 
