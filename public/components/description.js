@@ -40,12 +40,17 @@ export class Description extends HTMLElement{
             <main>
                 <div id="block">
                     <div id="howTo">
-                        左圖為該網頁的可見範圍，右圖為網頁中有文字重疊的部分。請依照你的感受來決定，右圖的文字重疊是正常現象還是有問題。
+                        左圖為文字重疊部分在網頁中的位置，右圖為網頁中有文字重疊的部分。
                         <br>
-                        覺得是正常現象請按
+                        請依照你的感受來決定，右圖的文字重疊是正常現象還是有問題。
+                        <br>
+                        看起來根本沒有文字重疊請按
                         "<span class="tag" style="color: #00a000">O</span>"
                         <br>
-                        覺得有問題，看起來怪怪的請按
+                        看起來有文字重疊，但看了覺得沒問題的請按
+                        "<span class="tag" style="color: #000fff;">▲</span>"
+                        <br>
+                        看起來有文字重疊，而且看了覺得有問題的請按
                         "<span class="tag" style="color: red">X</span>"
                     </div>
                     
@@ -64,9 +69,9 @@ export class Description extends HTMLElement{
             
                 #howTo{
                     position: absolute;
-                    width: 500px;
+                    width: 750px;
                     height: 150px;
-                    left: calc(50vw - 250px);
+                    left: calc(50vw - 375px);
                     top: 35.67px;
                     text-align: center;
                     overflow: auto;

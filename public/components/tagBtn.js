@@ -7,10 +7,13 @@ export class Tagbutton extends HTMLElement{
     connectedCallback(){
         this.render();
         let passBtn = this.shadowRoot.querySelector("#passBtn");
+        let fineBtn = this.shadowRoot.querySelector("#fineBtn");
         let failBtn = this.shadowRoot.querySelector("#failBtn");
 
         passBtn.addEventListener("pointerup", this.answerPass.bind(this));
+        fineBtn.addEventListener("pointerup", this.answerFine.bind(this));
         failBtn.addEventListener("pointerup", this.answerFail.bind(this));
+
     }
 
     get myAnswer(){
@@ -54,12 +57,28 @@ export class Tagbutton extends HTMLElement{
 
     async answerPass(e){
         this.shadowRoot.querySelector("#passBtn").disabled = true;
+        this.shadowRoot.querySelector("#fineBtn").disabled = true;
         this.shadowRoot.querySelector("#failBtn").disabled = true;
         // console.log(e.target);
-        this.setAttribute("myAnswer", 1);
+        this.setAttribute("myAnswer", 2);
         // console.log(this.myAnswer);
         await this.sleep(500);
         this.shadowRoot.querySelector("#passBtn").disabled = false;
+        this.shadowRoot.querySelector("#fineBtn").disabled = false;
+        this.shadowRoot.querySelector("#failBtn").disabled = false;
+        this.setAttribute("myAnswer", -1);
+        // console.log(this.myAnswer);
+    }
+
+    async answerFine(e){
+        this.shadowRoot.querySelector("#passBtn").disabled = true;
+        this.shadowRoot.querySelector("#fineBtn").disabled = true;
+        this.shadowRoot.querySelector("#failBtn").disabled = true;
+        // console.log(e.target);
+        this.setAttribute("myAnswer", 1);
+        await this.sleep(500);
+        this.shadowRoot.querySelector("#passBtn").disabled = false;
+        this.shadowRoot.querySelector("#fineBtn").disabled = false;
         this.shadowRoot.querySelector("#failBtn").disabled = false;
         this.setAttribute("myAnswer", -1);
         // console.log(this.myAnswer);
@@ -67,11 +86,13 @@ export class Tagbutton extends HTMLElement{
 
     async answerFail(e){
         this.shadowRoot.querySelector("#passBtn").disabled = true;
+        this.shadowRoot.querySelector("#fineBtn").disabled = true;
         this.shadowRoot.querySelector("#failBtn").disabled = true;
         // console.log(e.target);
         this.setAttribute("myAnswer", 0);
         await this.sleep(500);
         this.shadowRoot.querySelector("#passBtn").disabled = false;
+        this.shadowRoot.querySelector("#fineBtn").disabled = false;
         this.shadowRoot.querySelector("#failBtn").disabled = false;
         this.setAttribute("myAnswer", -1);
         // console.log(this.myAnswer);
@@ -86,6 +107,7 @@ export class Tagbutton extends HTMLElement{
         this.shadowRoot.innerHTML = `
             <div id="tags">
                 <button class="tag" style="color: #00a000;" id="passBtn">O</button>
+                <button class="tag" style="color: #000fff;" id="fineBtn">▲</button>
                 <button class="tag" style="color: red" id="failBtn">X</button>            
             </div>
             <style>
@@ -113,12 +135,17 @@ export class Tagbutton extends HTMLElement{
             
                 #passBtn{
                     --width: max(3.4vw, 54px);
-                    left: calc(50vw - var(--width) * 1.5);
+                    left: calc(50vw - var(--width) * 2);
                 }
             
                 #failBtn{
                     --width: max(3.4vw, 54px);
-                    left: calc(50vw + var(--width) * 0.5);
+                    left: calc(50vw + var(--width) * 1);
+                }
+
+                #fineBtn{
+                    --width: max(3.4vw, 54px);
+                    left: calc(50vw - var(--width) * 0.5);
                 }
             
                 button:hover{
