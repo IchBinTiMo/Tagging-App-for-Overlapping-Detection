@@ -10,7 +10,6 @@ export class Images extends HTMLElement{
 
         const mutationCallback = async (mutationsList) =>{
             for (const mutation of mutationsList) {                
-                // console.log(mutation.target);
                 this.shadowRoot.querySelector("#viewport").src = mutation.target.left;
                 this.shadowRoot.querySelector("#ovlp").src = mutation.target.right;
             }

@@ -8,14 +8,6 @@ export class Description extends HTMLElement{
         this.render();
     }
 
-    // get color(){
-    //     return this.getAttribute("color");
-    // }
-
-    // set color(value){
-    //     this.setAttribute("color", value);
-    // }
-
     get colorTheme(){
         return this.getAttribute("colorTheme");
     }

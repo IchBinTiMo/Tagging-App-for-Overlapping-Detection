@@ -28,29 +28,6 @@ export class Tagbutton extends HTMLElement{
         return ["myAnswer"];
     }
 
-    // get color(){
-    //     return this.getAttribute("color");
-    // }
-
-    // set color(value){
-    //     this.setAttribute("color", value);
-    // }
-
-    // get colorTheme(){
-    //     return this.getAttribute("colorTheme");
-    // }
-
-    // set colorTheme(value){
-    //     this.setAttribute("colorTheme", value);
-    //     let color = (this.colorTheme === "Light") ? "black" : "#bfc2c7";
-    //     this.shadowRoot.getElementById("howTo").style.color = color;
-    // }
-
-    // static get observedAttributes(){
-    //     return ["colorTheme"];
-    // }
-
-
     attributeChangedCallback(name, oldValue, newValue){
         this.render();
     }
@@ -59,43 +36,36 @@ export class Tagbutton extends HTMLElement{
         this.shadowRoot.querySelector("#passBtn").disabled = true;
         this.shadowRoot.querySelector("#fineBtn").disabled = true;
         this.shadowRoot.querySelector("#failBtn").disabled = true;
-        // console.log(e.target);
         this.setAttribute("myAnswer", 2);
-        // console.log(this.myAnswer);
         await this.sleep(500);
         this.shadowRoot.querySelector("#passBtn").disabled = false;
         this.shadowRoot.querySelector("#fineBtn").disabled = false;
         this.shadowRoot.querySelector("#failBtn").disabled = false;
         this.setAttribute("myAnswer", -1);
-        // console.log(this.myAnswer);
     }
 
     async answerFine(e){
         this.shadowRoot.querySelector("#passBtn").disabled = true;
         this.shadowRoot.querySelector("#fineBtn").disabled = true;
         this.shadowRoot.querySelector("#failBtn").disabled = true;
-        // console.log(e.target);
         this.setAttribute("myAnswer", 1);
         await this.sleep(500);
         this.shadowRoot.querySelector("#passBtn").disabled = false;
         this.shadowRoot.querySelector("#fineBtn").disabled = false;
         this.shadowRoot.querySelector("#failBtn").disabled = false;
         this.setAttribute("myAnswer", -1);
-        // console.log(this.myAnswer);
     }
 
     async answerFail(e){
         this.shadowRoot.querySelector("#passBtn").disabled = true;
         this.shadowRoot.querySelector("#fineBtn").disabled = true;
         this.shadowRoot.querySelector("#failBtn").disabled = true;
-        // console.log(e.target);
         this.setAttribute("myAnswer", 0);
         await this.sleep(500);
         this.shadowRoot.querySelector("#passBtn").disabled = false;
         this.shadowRoot.querySelector("#fineBtn").disabled = false;
         this.shadowRoot.querySelector("#failBtn").disabled = false;
         this.setAttribute("myAnswer", -1);
-        // console.log(this.myAnswer);
     }
 
     sleep(ms){

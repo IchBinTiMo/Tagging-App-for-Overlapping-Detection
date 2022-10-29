@@ -9,17 +9,13 @@ export class Header extends HTMLElement{
         this.render();
         let toggleBtn = this.shadowRoot.querySelector("#toggleBtn");
         let homeBtn = this.shadowRoot.querySelector("#homeBtn");
-        // let highlightBtn = this.shadowRoot.querySelector("#highlightBtn");
 
         homeBtn.addEventListener("pointerup", this.goHome.bind(this));
         toggleBtn.addEventListener("pointerup", this.changeColorTheme.bind(this));
-        // highlightBtn.addEventListener("pointerup", this.highlight.bind(this));
 
         const mutationCallback = async (mutationsList) =>{
             for (const mutation of mutationsList) {                
-                // console.log(mutation.target);
                 this.shadowRoot.querySelector("#progress").textContent = mutation.target.myProgress;
-                // this.shadowRoot.querySelector("#ovlp").src = mutation.target.right;
             }
             
         };
@@ -71,7 +67,6 @@ export class Header extends HTMLElement{
     changeColorTheme(e){
         let oldTheme = e.target.textContent;
         let newTheme = (oldTheme === "Light") ? "Dark" : "Light";
-        // console.log(`change to ${newTheme}`);
 
         this.setAttribute("colorTheme", newTheme);
         e.target.textContent = newTheme;
@@ -83,17 +78,14 @@ export class Header extends HTMLElement{
 
     async highlight(){
         this.setAttribute("mySpotlight", 1);
-        // console.log(this.getAttribute("mySpotlight"));
         await this.sleep(500);
         this.setAttribute("mySpotlight", 0);
-        // console.log(this.getAttribute("mySpotlight"));
     }
 
     sleep(ms){
         return new Promise(resolve => setTimeout(resolve, ms)); 
     }
 
-    // <span class="btn" id="highlightBtn">Highlight</span>
 
     render(){
         this.shadowRoot.innerHTML = `

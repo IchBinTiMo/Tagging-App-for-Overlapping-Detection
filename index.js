@@ -18,7 +18,6 @@ app.listen(port, () => {
     console.log(`listening at port ${port}`);
     makeDict();
     makeResult();
-    // console.log(current, total);
 
 });
 
@@ -57,7 +56,6 @@ app.get("/dict", (req, res) => {
 
 app.get("/:w", (req, res) => {
     if(req.params.w == "null"){
-        // console.log("here");
         let w = myDict.cases[`${myDict.current + 1}`][0];
         res.sendFile(__dirname + `/cases/specificArea/failed_${w}.png`);
     }
@@ -66,16 +64,12 @@ app.get("/:w", (req, res) => {
     }
 });
 
-// app.get("/:w/:c", (req, res) => {
-//     res.sendFile(__dirname + `/cases/specificArea/failed_${req.params.w}_${req.params.c}.png`);
-// });
 
 app.get("/:w/h", (req, res) => {
     res.sendFile(__dirname + `/cases/highlight/failed_${req.params.w}h.png`);
 });
 
 app.get("/answer/:idx/:answer", (req, res) => {
-    // console.log(req);
     console.log(req.params.idx, req.params.answer);
     let ans = req.params.answer;
     let idx = req.params.idx;
@@ -89,7 +83,6 @@ app.get("/answer/:idx/:answer", (req, res) => {
     res.send("answered");
 });
 
-// app.get("/null", (req, res) => {});
 
 function makeDict(){
     let file = "dict.json";
@@ -118,7 +111,6 @@ function makeDict(){
     current = myDict.current;
     total = myDict.total;
 
-    // return [current, total];
 }
 
 function makeResult(){
