@@ -54,18 +54,23 @@ class Mainpage extends HTMLElement{
         let dict = await this.getDict();
         this.render();
 
+        // function to observe the attribute change of tag buttons to get users' answer
         const answerMutation = async (mutationList) => {
             for(const mutation of mutationList){
+                // -1 is the default answer which means users haven't answered yet
                 if(mutation.target.myAnswer != -1){
+                    // get the index of current case
                     let dict = await this.getDict();
                     let idx = dict.cases[`${dict.current + 1}`];
                     let ansIdx = `${idx[0]}_${idx[1]}`;
 
+                    // pass users' answer through sending request to server
                     let ansRes = await fetch(`/answer/${ansIdx}/${mutation.target.myAnswer}`);
                     dict = await this.getDict();
 
                     this.shadowRoot.querySelector("#myHeader").myProgress = this.getAttribute("myProgress");
 
+                    // get new case and refresh shown images
                     idx = dict.cases[`${dict.current + 1}`];
                     console.log(dict.current+1, idx);
                     let left = idx[0];
@@ -81,6 +86,8 @@ class Mainpage extends HTMLElement{
         };
         
         const answerObserver = new MutationObserver(answerMutation);
+
+        // function to observe the attribute chage of header
         const mutationCallback = async (mutationsList) =>{
             for (const mutation of mutationsList) {                
                 this.setAttribute("colorTheme", mutation.target.getAttribute("colorTheme"));
@@ -91,8 +98,12 @@ class Mainpage extends HTMLElement{
                     this.shadowRoot.querySelector("#myDone").colorTheme = mutation.target.getAttribute("colorTheme");
                 }
             }
+
+            //change theme when user press the button
             const bgc = (this.colorTheme === "Light") ? "white" : "#1d3040";
             document.body.style.background = bgc;
+
+            // react differently depending on the current page state
             let images = this.shadowRoot.querySelector("#myImages");
             let tagBtn = this.shadowRoot.querySelector("#myTagBtn");
             if(this.getAttribute("pageInfo") === "Done"){
@@ -149,7 +160,7 @@ class Mainpage extends HTMLElement{
         this.render();        
     }
 
-
+    // function to get the index of current case
     async getDict(){
         let jsonFile = await fetch("dict");
         let dict = await jsonFile.json();
