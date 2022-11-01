@@ -73,13 +73,27 @@ class Mainpage extends HTMLElement{
                     // get new case and refresh shown images
                     idx = dict.cases[`${dict.current + 1}`];
                     console.log(dict.current+1, idx);
-                    let left = idx[0];
-                    let right = idx[1];
+                    if(dict.current === dict.total - 1){
+                        this.setAttribute("pageInfo", "Done");
+                        let myDone = document.createElement("custom-done");
+                        myDone.id = "myDone";
+                        myDone.colorTheme = this.getAttribute("colorTheme") === null ? "Light" : this.getAttribute("colorTheme");
+                        this.shadowRoot.appendChild(myDone);
+                        this.shadowRoot.querySelector("#myDescription").style.visibility = "hidden";
+                        this.shadowRoot.querySelector("#myHeader").pageInfo = "Done";
+                        this.shadowRoot.removeChild(this.shadowRoot.querySelector("#myImages"));
+                        this.shadowRoot.removeChild(this.shadowRoot.querySelector("#myTagBtn"));
+                    }
+                    else{
+                        let left = idx[0];
+                        let right = idx[1];
+                        let myImages = this.shadowRoot.querySelector("#myImages");
+                        myImages.left = `/${left}_${right}/h`;
+                        myImages.right = `/${left}_${right}`;
+
+                    }
 
 
-                    let myImages = this.shadowRoot.querySelector("#myImages");
-                    myImages.left = `/${left}_${right}/h`;
-                    myImages.right = `/${left}_${right}`;
 
                 }
             }
@@ -181,7 +195,7 @@ class Mainpage extends HTMLElement{
 
         console.log(dict);
 
-        if(dict.current === dict.total){
+        if(dict.current === dict.total - 1){
             this.setAttribute("pageInfo", "Done");
             let myDone = document.createElement("custom-done");
             myDone.id = "myDone";
