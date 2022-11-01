@@ -55,18 +55,36 @@ app.get("/dict", (req, res) => {
 });
 
 app.get("/:w", (req, res) => {
+    console.log("1");
     if(req.params.w == "null"){
-        let w = myDict.cases[`${myDict.current + 1}`][0];
-        res.sendFile(__dirname + `/cases/specificArea/failed_${w}.png`);
+        let current = myDict.cases[`${myDict.current + 1}`];
+        let w;
+        if(current){
+            w = current[0];
+        }
+        else{
+            w = -1;
+        }
+        let file = __dirname + `/cases/specificArea/failed_${w}.png`;
+        if(fs.existsSync(file)){
+            res.sendFile(file);
+        }
     }
     else{
-        res.sendFile(__dirname + `/cases/specificArea/failed_${req.params.w}.png`);
+        let file = __dirname + `/cases/specificArea/failed_${req.params.w}.png`;
+        if(fs.existsSync(file)){
+            res.sendFile(file);
+        }
     }
 });
 
 
 app.get("/:w/h", (req, res) => {
-    res.sendFile(__dirname + `/cases/highlight/failed_${req.params.w}h.png`);
+    console.log("2");
+    let file = __dirname + `/cases/highlight/failed_${req.params.w}h.png`;
+    if(fs.existsSync(file)){
+        res.sendFile(file);
+    }
 });
 
 app.get("/answer/:idx/:answer", (req, res) => {
