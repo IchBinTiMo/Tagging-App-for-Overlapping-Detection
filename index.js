@@ -89,6 +89,9 @@ app.get("/:w/h", (req, res) => {
 
 app.get("/answer/:idx/:answer", (req, res) => {
     console.log(req.params.idx, req.params.answer);
+    if(req.params.answer === "-1"){
+        res.send("Wrong Answered");
+    }
     let ans = req.params.answer;
     let idx = req.params.idx;
 
