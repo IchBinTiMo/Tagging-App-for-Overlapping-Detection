@@ -55,7 +55,6 @@ app.get("/dict", (req, res) => {
 });
 
 app.get("/:w", (req, res) => {
-    // console.log("1");
     if(req.params.w == "null"){
         let current = myDict.cases[`${myDict.current + 1}`];
         let w;
@@ -80,7 +79,6 @@ app.get("/:w", (req, res) => {
 
 
 app.get("/:w/h", (req, res) => {
-    // console.log("2");
     let file = __dirname + `/cases/highlight/failed_${req.params.w}h.png`;
     if(fs.existsSync(file)){
         res.sendFile(file);
