@@ -19,7 +19,10 @@ Tagging-App-for-Overlapping-Detection`
 Tagging-App-for-Overlapping-Detection` 
 2. Go to [http://localhost:8080/](http://localhost:8080/)
 3. Click button according to your feelings.
-4. After tagging all cases, upload `Tagging-App-for-Overlapping-Detection/result.json` to [RS(1)]() / [RS(2)]() depends on which dataset you downloaded. Please **DO NOT** replace any other files.
+4. After tagging all cases, upload `Tagging-App-for-Overlapping-Detection/result.json` to [RS(1)]() / [RS(2)]() depends on which dataset you downloaded.
+```diff
+- Please DO NOT replace any other files while uploading.
+```
 
 ## How To
 - Click `Start`, and you should see 2 images and 3 buttons like below.
