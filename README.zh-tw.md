@@ -1,4 +1,6 @@
 # Tagging App for Overlapping Detection
+[![en](https://img.shields.io/badge/lang-en-red.svg)](https://github.com/IchBinTiMo/Tagging-App-for-Overlapping-Detection/blob/main/README.md)
+[![pt-br](https://img.shields.io/badge/lang-zh--tw-blue.svg)](https://github.com/IchBinTiMo/Tagging-App-for-Overlapping-Detection/blob/main/README.zh-tw.md)
 
 ## 簡介
 這是一個用來幫文字重疊偵測的測資按標籤的app。
