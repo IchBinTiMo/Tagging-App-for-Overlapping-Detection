@@ -50,7 +50,7 @@ export class Done extends HTMLElement{
                 #howTo{
                     position: absolute;
                     width: 700px;
-                    height: 175px;
+                    height: 200px;
                     left: calc(50vw - 350px);
                     top: 300px;
                     text-align: center;

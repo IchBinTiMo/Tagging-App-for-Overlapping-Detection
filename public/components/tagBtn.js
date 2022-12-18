@@ -98,7 +98,7 @@ export class Tagbutton extends HTMLElement{
                     height: 35px;
                     width: 54px;
                     left: calc(50vw - 27px);
-                    top: 210.67px;
+                    top: 235.67px;
                     text-align: center;
                     overflow: auto;
                 }
