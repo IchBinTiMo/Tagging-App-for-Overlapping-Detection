@@ -10,9 +10,9 @@ export class Tagbutton extends HTMLElement{
         let fineBtn = this.shadowRoot.querySelector("#fineBtn");
         let failBtn = this.shadowRoot.querySelector("#failBtn");
 
-        passBtn.addEventListener("pointerup", this.answerPass.bind(this));
-        fineBtn.addEventListener("pointerup", this.answerFine.bind(this));
-        failBtn.addEventListener("pointerup", this.answerFail.bind(this));
+        passBtn.addEventListener("click", this.answerPass.bind(this));
+        fineBtn.addEventListener("click", this.answerFine.bind(this));
+        failBtn.addEventListener("click", this.answerFail.bind(this));
 
     }
 
@@ -98,7 +98,7 @@ export class Tagbutton extends HTMLElement{
                     height: 35px;
                     width: 54px;
                     left: calc(50vw - 27px);
-                    top: 185.67px;
+                    top: 210.67px;
                     text-align: center;
                     overflow: auto;
                 }

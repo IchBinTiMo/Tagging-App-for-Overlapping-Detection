@@ -29,7 +29,7 @@ export class StartButton extends HTMLElement{
                     height: 27px;
                     width: 54px;
                     left: calc(50vw - 27px);
-                    top: 185px;
+                    top: 210px;
                     overflow: auto;
                     z-index: 100000000;
                 }

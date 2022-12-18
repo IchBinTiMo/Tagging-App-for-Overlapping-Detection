@@ -64,7 +64,7 @@ export class Images extends HTMLElement{
 
                 div.viewport{
                     position: absolute;
-                    top: 230px;
+                    top: 255px;
                     height: max(60vh, 500px);
                     width: max(45vw, 500px);
                     left: calc(46vw - max(45vw, 500px));
@@ -72,7 +72,7 @@ export class Images extends HTMLElement{
 
                 div.ovlp{
                     position: absolute;
-                    top: 230px;
+                    top: 255px;
                     height: max(60vh, 500px);
                     width: max(45vw, 500px);
                     left: 50vw;

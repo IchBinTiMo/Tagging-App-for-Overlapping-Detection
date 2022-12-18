@@ -43,7 +43,8 @@ export class Description extends HTMLElement{
                         "<span class="tag" style="color: #000fff;">▲</span>"
                         <br>
                         看起來有文字重疊，而且看了覺得有問題的請按
-                        "<span class="tag" style="color: red">X</span>"
+                        "<span class="tag" style="color: red">X</span>"<br>
+                        <b>(文字重疊: 只要兩組目標文字有擦到邊邊就算重疊)</b>
                     </div>
                     
                 </div>
@@ -62,7 +63,7 @@ export class Description extends HTMLElement{
                 #howTo{
                     position: absolute;
                     width: 750px;
-                    height: 150px;
+                    height: 175px;
                     left: calc(50vw - 375px);
                     top: 35.67px;
                     text-align: center;
