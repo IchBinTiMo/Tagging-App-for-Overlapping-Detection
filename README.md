@@ -35,7 +35,7 @@ Tagging-App-for-Overlapping-Detection`
     - If 2 images are not matched, **ignore the left image**.
 - 3 Buttons
     - `O` means there is **NO** text-overlapping in the target image.
-    - `▲` means that the text overlaps, but you **DON't** feel uncomfortable when you look at those overlapping text.
+    - `▲` means that the text overlaps, but you **DON'T** feel uncomfortable when you look at those overlapping text.
     - `X` means there is text-overlapping, and you **DO** feel uncomfortable when you look at overlapping text.
 
 ## What Is Text-Overlapping
