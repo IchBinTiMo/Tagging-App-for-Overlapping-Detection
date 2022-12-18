@@ -9,9 +9,9 @@ This is an app to tag testcases for Overlapping Detection
 
 ## Installation
 
-1. **git clone / download** this repo from [Github](https://github.com/IchBinTiMo/Tagging-App-for-Overlapping-Detection)
+1. **git clone / download** this repo from [Github](https://github.com/IchBinTiMo/Tagging-App-for-Overlapping-Detection).
 2. Run `npm install` in terminal under the directory `
-Tagging-App-for-Overlapping-Detection`
+Tagging-App-for-Overlapping-Detection`.
 
 ## Execution
 1. Go to [DS(1)]() / [DS(2)]() to download your dataset, unzip it, and put `highlight/` and `specificArea/` into `Tagging-App-for-Overlapping-Detection/cases/`
@@ -30,8 +30,9 @@ Tagging-App-for-Overlapping-Detection`
 - 2 Images
     - The **right** one is the target image, which only show the overlapping area.
     - The **left** one is the reference image, which display where the target is in the whole viewport.
+    - If 2 images are not matched, **ignore the left image**.
 - 3 Buttons
-    - `O` means there is **NO** text-overlapping in the target image
+    - `O` means there is **NO** text-overlapping in the target image.
     - `▲` means that the text overlaps, but you **DON't** feel uncomfortable when you look at those overlapping text.
     - `X` means there is text-overlapping, and you **DO** feel uncomfortable when you look at overlapping text.
 
