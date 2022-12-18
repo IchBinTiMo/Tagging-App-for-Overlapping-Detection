@@ -1,8 +1,5 @@
 # Tagging App for Overlapping Detection
 
-## Table of Contents
-[TOC]
-
 ## Introduction
 This is an app to tag testcases for Overlapping Detection
 
@@ -22,7 +19,7 @@ Tagging-App-for-Overlapping-Detection`
 Tagging-App-for-Overlapping-Detection` 
 2. Go to [http://localhost:8080/](http://localhost:8080/)
 3. Click button according to your feelings.
-4. After tagging all cases, upload `Tagging-App-for-Overlapping-Detection/result.json` to [RS(1)]() / [RS(2)]() depends on which dataset you downloaded. Please **<span style="background-color:red;color:white">DO  NOT</span>** replace any other files.
+4. After tagging all cases, upload `Tagging-App-for-Overlapping-Detection/result.json` to [RS(1)]() / [RS(2)]() depends on which dataset you downloaded. Please **DO NOT** replace any other files.
 
 ## How To
 - Click `Start`, and you should see 2 images and 3 buttons like below.
@@ -31,9 +28,9 @@ Tagging-App-for-Overlapping-Detection`
     - The **right** one is the target image, which only show the overlapping area.
     - The **left** one is the reference image, which display where the target is in the whole viewport.
 - 3 Buttons
-    - <button class="tag" style="color: #00a000;font-size: 21px;" id="passBtn">O</button> means there is **no** text-overlapping in the target image
-    - <button class="tag" style="color: #000fff;font-size: 16px;" id="fineBtn">▲</button> means that the text overlaps, but you **don't** feel uncomfortable when you look at those overlapping text.
-    - <button class="tag" style="color: red;font-size: 21px;" id="failBtn">X</button> means there is text-overlapping, and you **do** feel uncomfortable when you look at overlapping text.
+    - `O` means there is **NO** text-overlapping in the target image
+    - `▲` means that the text overlaps, but you **DON't** feel uncomfortable when you look at those overlapping text.
+    - `X` means there is text-overlapping, and you **DO** feel uncomfortable when you look at overlapping text.
 
 ## What Is Text-Overlapping
 - One text is covered by other text.
