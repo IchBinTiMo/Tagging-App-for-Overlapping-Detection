@@ -28,9 +28,9 @@ Tagging-App-for-Overlapping-Detection`
 
 ## How To
 - Go to [http://localhost:8080/](http://localhost:8080/), and you will see start page like below.
-    ![Start_Page](start_page.png)
+    ![Start_Page](demo/start_page.png)
 - Click `Start`, and you should see 2 images and 3 buttons like below.
-    ![Demo](demo.png)
+    ![Demo](demo/demo.png)
 - 2 Images
     - The **right** one is the target image, which only show the overlapping area.
     - The **left** one is the reference image, which display where the target is in the whole viewport.

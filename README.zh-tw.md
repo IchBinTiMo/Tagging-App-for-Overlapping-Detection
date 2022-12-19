@@ -27,9 +27,9 @@
 
 ## 使用說明
 - 起始頁面如下圖所示。
-    ![Start_Page](start_page.png)
+    ![Start_Page](demo/start_page.png)
 - 按下`Start`，然後你會看到2張圖片和3個按鈕，如下圖所示。
-    ![Demo](demo.png)
+    ![Demo](demo/demo.png)
 - 2張圖片
     - **右圖**只會顯示出一個有文字重疊的地方。
     - **左圖**會顯示出右圖在左圖中的位置。
